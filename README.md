@@ -1,6 +1,6 @@
 # GPP-Prediction
-A Spatiotemporal Deep Learning Framework for GPP Prediction and Compound Drought Mechanism Analysis in the Huai River Basin
-# GPP Prediction and Drought Mechanism Analysis in the Huai River Basin
+A Spatiotemporal Deep Learning Framework for GPP Prediction and Compound Drought Mechanism Analysis 
+# GPP Prediction and Drought Mechanism Analysis 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![MATLAB](https://img.shields.io/badge/MATLAB-R2023a-blue.svg)](https://www.mathworks.com/products/matlab.html)
