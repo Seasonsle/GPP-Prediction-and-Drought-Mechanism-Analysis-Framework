@@ -1,4 +1,4 @@
-# GPP-Prediction
+# GPP Prediction and Drought Mechanism Analysis Framework
 A Spatiotemporal Deep Learning Framework for GPP Prediction and Compound Drought Mechanism Analysis 
 # GPP Prediction and Drought Mechanism Analysis 
 
