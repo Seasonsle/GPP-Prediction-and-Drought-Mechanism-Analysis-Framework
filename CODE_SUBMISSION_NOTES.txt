@@ -1,8 +1,5 @@
 Code submission preparation notes
 
-Prepared folder:
-E:\codex_workspace\Huaihe_WRR_Code_Submission_v1
-
 Main changes made to the copied code:
 1. Removed user-specific absolute Windows paths from MATLAB scripts.
 2. Replaced local data paths with project-relative paths:
