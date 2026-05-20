@@ -1,0 +1,27 @@
+Code submission preparation notes
+
+Prepared folder:
+E:\codex_workspace\Huaihe_WRR_Code_Submission_v1
+
+Main changes made to the copied code:
+1. Removed user-specific absolute Windows paths from MATLAB scripts.
+2. Replaced local data paths with project-relative paths:
+   - data/
+   - models/
+   - outputs/
+3. Added addpath(genpath(fullfile(projectRoot, 'code'))) to scripts so helper functions can be found from either code/train or code/after_train.
+4. Changed the main training and PSO trial training execution environment from GPU-only to auto where needed.
+5. Rewrote PSO.m and ys.m as clean UTF-8/ASCII helper functions with the same interface.
+6. Added dry_recover_v1.m and dry_recover_reason.m to the after_train workflow and converted their paths to project-relative paths.
+7. Added README.md, CITATION.cff, LICENSE, .gitignore, and a data-folder placeholder.
+
+Data DOI:
+https://doi.org/10.5281/zenodo.20306852
+
+Software archive recommendation:
+Upload this prepared folder to GitHub and/or archive a versioned software release on Zenodo. Use the future software DOI in the manuscript Software Availability Statement.
+
+Static checks performed:
+1. No C:\, E:\, or F:\ absolute Windows paths remain in MATLAB .m files.
+2. MATLAB Code Analyzer reported no issues for main_workflow_huaih.m and PSO.m.
+3. MATLAB Code Analyzer reported only non-blocking style/performance notes for SHAP_Spatial_GEO.m and dry_recover_v1.m.

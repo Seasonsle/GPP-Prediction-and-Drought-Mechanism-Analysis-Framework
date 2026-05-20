@@ -1,33 +1,85 @@
-# GPP Prediction and Drought Mechanism Analysis Framework
-A Spatiotemporal Deep Learning Framework for GPP Prediction and Compound Drought Mechanism Analysis 
-# GPP Prediction and Drought Mechanism Analysis 
+# GPP Prediction and Compound Drought Mechanism Analysis Code
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![MATLAB](https://img.shields.io/badge/MATLAB-R2023a-blue.svg)](https://www.mathworks.com/products/matlab.html)
+This repository contains MATLAB code used for GPP prediction, PSO-LSTM-Transformer model training, post-training evaluation, SHAP-based mechanism analysis, and drought-recovery analysis for the Huai River Basin, China.
 
-Official repository for the paper: A Spatiotemporal Deep Learning Framework for GPP Prediction and Compound Drought Mechanism Analysis in the Huai River Basin.
+The processed input data required by these scripts are archived separately on Zenodo:
 
-This repository contains the MATLAB source code for the unified analytical framework integrating the **PSO-LSTM-Transformer** hybrid architecture, **Monte-Carlo SHAP** interpretability, and ecosystem resilience assessment.
+https://doi.org/10.5281/zenodo.20306852
 
-## 📖 Overview / 研究概述
-
-In this study, we propose an integrated end-to-end framework to analyze Gross Primary Productivity (GPP) dynamics under drought stress in the climate transition zone (Huai River Basin, China). The workflow comprises four main modules:
-1.  **Spatiotemporal Data Preprocessing**: Constructing pixel-based 3D tensors (14 channels, 288 months from 2001-2024).
-2.  **Hybrid Deep Learning Model**: A PSO-optimized LSTM-Transformer architecture (`PSO.m`) for accurate long-term GPP prediction.
-3.  **Interpretability Framework**: Monte-Carlo sampling-based SHAP analysis to decouple hydrometeorological drivers (e.g., `vpd`, `Ante_prec_5`).
-4.  **Resilience Assessment**: Calculating the Standardized GPP Anomaly Index (SGAI) to quantify the Time-to-Recovery (TtR).
-
-## 🗂️ Repository Structure / 项目结构
+## Repository contents
 
 ```text
-├── data/                           % Sample data directory / 示例数据目录
-│   └── sample_Train_3D.mat         % A small subset of 3D tensor data for testing
-├── models/                         % Model architecture / 模型架构核心代码
-│   ├── PSO.m                       % Particle Swarm Optimization algorithm
-│   └── lstm_transformer_build.m    % Hybrid network construction 
-├── scripts/                        % Main execution scripts / 执行脚本
-│   ├── check_before_train.m        % Data loading, memory check, and visualization
-│   ├── main_train.m                % Main script for model training
-│   ├── shap_analysis.m             % Monte-Carlo SHAP calculation
-│   └── resilience_analysis.m       % SGAI and TtR calculation
-└── README.md
+code/
+  train/
+    main_workflow_huaih.m          Main PSO-LSTM-Transformer training workflow.
+    run_pso_optimization.m         PSO hyperparameter-search wrapper.
+    PSO.m                          Particle swarm optimization implementation.
+    ys.m                           PSO particle-position initialization helper.
+  after_train/
+    chek_withpso_v5.m              Post-training prediction and model-performance evaluation.
+    SHAP_Spatial_Analysis.m        Global SHAP importance and beeswarm-style analysis.
+    SHAP_Spatial_GEO.m             Spatial SHAP analysis and driver-regime export.
+    shapley_lstm_3d.m              Leave-one-feature-out SHAP approximation for sequence models.
+    dry_recover_v1.m               Lightweight drought-recovery-time calculation.
+    dry_recover_reason.m           Multi-factor drought-recovery mechanism analysis.
+models/
+  Final_Model_Huaihe_v5.mat        Trained model artifact and normalization parameters.
+data/
+  README_place_zenodo_files_here.txt
+outputs/
+  .gitkeep
+```
+
+## Data preparation
+
+Download the Zenodo dataset and place the following files under `data/`:
+
+```text
+Ready_for_Train_3D_Huaihe_v5.mat
+Pixel_Data_GPP.mat
+Pixel_Data_petPM.mat
+Pixel_Data_soil.mat
+Pixel_Data_spei.mat
+Pixel_Data_tmpmax.mat
+Pixel_Data_vpd.mat
+```
+
+The main scripts use relative paths derived from the script location, so they do not require user-specific Windows paths.
+
+## MATLAB requirements
+
+The scripts were prepared for MATLAB workflows and require toolboxes that provide:
+
+- Deep learning layers and training functions, including `trainNetwork`, `sequenceInputLayer`, `lstmLayer`, `selfAttentionLayer`, `positionEmbeddingLayer`, and `trainingOptions`.
+- `mapminmax` normalization functions.
+- Statistics functions such as `knnsearch`, `prctile`, and `histcounts`.
+- Optional parallel execution for `parpool` and `parfor`.
+- Optional Mapping Toolbox functions for boundary display in `dry_recover_v1.m`; the script still runs without the optional shapefile.
+
+GPU execution is optional. Training and prediction scripts use `ExecutionEnvironment`, and most post-training prediction code falls back to CPU when GPU execution fails.
+
+## Recommended run order
+
+1. Place the Zenodo `.mat` input files in `data/`.
+2. Run `code/train/main_workflow_huaih.m` to train the PSO-LSTM-Transformer model and write `models/Final_Model_Huaihe_v5.mat`.
+3. Alternatively, use the included `models/Final_Model_Huaihe_v5.mat` to skip retraining and run the post-training scripts directly.
+4. Run `code/after_train/chek_withpso_v5.m` for prediction, global metrics, spatial-error analysis, and best-pixel diagnostics.
+5. Run `code/after_train/SHAP_Spatial_Analysis.m` for global SHAP ranking and feature-contribution visualization.
+6. Run `code/after_train/SHAP_Spatial_GEO.m` for spatial SHAP maps and driver-regime exports under `outputs/`.
+7. Run `code/after_train/dry_recover_v1.m` to calculate lightweight drought-recovery-time outputs.
+8. Run `code/after_train/dry_recover_reason.m` after step 7 to analyze environmental gradients associated with recovery time.
+
+## Reproducibility notes
+
+- The scripts set `rng(42)` where stochastic sampling or optimization is used.
+- The data archive provides monthly, 1-km, MATLAB-formatted model-ready inputs for 2001-01 to 2022-12.
+- The included trained model file contains the trained network and normalization parameters used by the post-training evaluation and SHAP scripts.
+- Large processed input data are not duplicated in this code package; use the Zenodo DOI above.
+
+## Citation
+
+If using the processed input data, cite:
+
+Chen, L., & Ning, S. (2026). Processed Monthly 1-km GPP and Hydroclimatic Dataset for Compound Drought Mechanism Analysis in the Huai River Basin China (Version 1.0.0) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.20306852
+
+For the code, cite the archived software DOI once a software release DOI has been created.

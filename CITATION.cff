@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the associated software archive DOI once available and cite the Zenodo dataset DOI for the processed inputs."
+title: "GPP Prediction and Compound Drought Mechanism Analysis Framework for the Huai River Basin"
+version: "1.0.0"
+date-released: "2026-05-20"
+authors:
+  - family-names: Chen
+    given-names: Le
+  - family-names: Ning
+    given-names: Shaowei
+    orcid: "https://orcid.org/0000-0003-4062-9893"
+repository-code: "https://github.com/Seasonsle/GPP-Prediction-and-Drought-Mechanism-Analysis-Framework"
+keywords:
+  - gross primary productivity
+  - GPP
+  - compound drought
+  - PSO-LSTM-Transformer
+  - SHAP
+  - Huai River Basin
+references:
+  - type: data
+    title: "Processed Monthly 1-km GPP and Hydroclimatic Dataset for Compound Drought Mechanism Analysis in the Huai River Basin China"
+    authors:
+      - family-names: Chen
+        given-names: Le
+      - family-names: Ning
+        given-names: Shaowei
+    year: 2026
+    doi: "10.5281/zenodo.20306852"
